@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>390</x>
+      <y>30</y>
+      <w>290</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>User
+--
+-ID:String
+-password:String
+--
+getID():String
+getPassword():String
+--
+User(ID:String,password:String)
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>70</x>
+      <y>20</y>
+      <w>210</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>ReservationSystem
+--
+isValidID:boolean
+isValidPassword:boolean
+ArrayList:T
+--
+SignUp():void
+SignIn():void
+Exit(): void
+--</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>270</x>
+      <y>60</y>
+      <w>140</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>120.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
