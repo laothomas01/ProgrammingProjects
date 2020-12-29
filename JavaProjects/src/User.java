@@ -1,23 +1,31 @@
 
 public class User {
-	private String ID;
+	private String userName;
 	private String password;
 
-	User(String ID, String password) {
-		this.ID = ID;
+	User(String userName, String password) {
+		this.userName = userName;
 		this.password = password;
 	}
 
-	public String getID() {
-		return this.ID;
+	User(String userName) {
+		this(userName, "");
+	}
+
+	User() {
+		this("", "");
+	}
+
+	public String getUserName() {
+		return this.userName;
 	}
 
 	public String getPassword() {
 		return this.password;
 	}
 
-	public void setID(String ID) {
-		this.ID = ID;
+	public void setID(String userName) {
+		this.userName = userName;
 	}
 
 	public void setPassword(String password) {
@@ -25,11 +33,7 @@ public class User {
 	}
 
 	public String toString() {
-		return String.format("User: %s Password: %s\n", this.ID, this.password);
+		return String.format("user=%s\npassword=%s\n", this.userName, this.password);
 	}
-	
-	
 
-	
-	
 }
