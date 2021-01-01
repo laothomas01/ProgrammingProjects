@@ -33,7 +33,8 @@ public class User {
 	}
 
 	public String toString() {
-		return String.format("user=%s\npassword=%s\n", this.userName, this.password);
+		
+		return String.format("user=%s\t\npassword=%s\n", this.userName, this.password);
 	}
 
 }

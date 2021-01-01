@@ -73,7 +73,7 @@ public class Seat {
 
 	public String toString() {
 		return String.format(
-				"seatPrice = $%.2f, seatNumber=%d, isOccupied=%b, seatSection=%s, seatDate=%s, seatTime=%s\n",
+				"seatPrice = $%.2f\t\nseatNumber=%d\t\nisOccupied=%b\t\nseatSection=%s\t\nseatDate=%s\t\nseatTime=%s\n\n",
 				this.seatPrice, this.seatNumber, this.isOccupied, this.seatSection, this.date, this.time);
 	}
 

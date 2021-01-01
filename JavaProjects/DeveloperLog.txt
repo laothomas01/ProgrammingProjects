@@ -1,0 +1,26 @@
+12/30/2020
+2:06 AM
+	I have completed a good portion of functionalities for my database classes.
+	The problems I am facing is: 
+	1) when a seat is created, they are stored in a hashmap. The issue here is seats with same information, but different keys can be added.
+	2) I have not finished the GUI
+	3) i have not converted my datetime information
+	4) i still have to provide a remove function for my classes
+	5) i have to parse my text file as well
+	6) i have to do a for loop for my seats. 
+	
+12/31/2020
+2:42 AM
+	I have completed the Userdatabase. Yay.
+	I am looking at the SeatDatabase and going What the Fuck and I doing?
+	-so it's a database for seats... but you cannot have duplicates of that seat
+	-it takes in a seatID and a seat
+	-this is the seat constructor: 
+	
+		this.seatPrice = seatPrice;
+		this.seatNumber = seatNumber;
+		this.isOccupied = isOccupied;
+		this.seatSection = seatSection;
+		this.date = date;
+		this.time = time;
+	I AM FUCKING CONFUSED. 

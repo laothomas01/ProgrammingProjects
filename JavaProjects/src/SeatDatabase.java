@@ -52,7 +52,7 @@ public class SeatDatabase<T extends Seat> {
 	}
 
 	public void addSeat(T seat) {
-		seatDB.put(getSeatID(seat), seat);
+		seatDB.put(seat.getSeatSection() + Integer.toString(seat.getSeatNumber()), seat);
 	}
 
 //	public boolean isSeatOccupied(String seatID, T seat) {
@@ -67,31 +67,36 @@ public class SeatDatabase<T extends Seat> {
 		ArrayList<String> sdb = new ArrayList<String>();
 		for (Entry<String, T> entry : this.seatDB.entrySet()) {
 			T value = entry.getValue();
-			sdb.add(value.toString());
+			sdb.add(Double.toString(value.getSeatPrice()));
+
 		}
 		return sdb;
 	}
 
 	public String toString() {
-		return seatDB.toString() + "\n";
+		return seatDB.toString();
 	}
 
 	public static void main(String args[]) {
 		SeatDatabase<Seat> sdb = new SeatDatabase<Seat>();
 		Seat seat1 = new Seat(35.0, 1, false, "m", "2020-12-23", "06:30PM");
-		sdb.addSeat("m1", seat1);
+		sdb.addSeat(seat1);
 		Seat seat2 = new Seat(35.0, 1, false, "n", "2020-12-23", "06:30PM");
-		sdb.addSeat("n2", seat2);
+		sdb.addSeat(seat2);
+		Seat seat3 = new Seat(35.0, 1, false, "m", "2020-12-23", "06:30PM");
+		sdb.addSeat(seat3);
+		System.out.println(sdb.getSeatDataBase());
+
 //
 //		Seat seat3 = new Seat(35.0, 1, false, "m", "2020-12-23", "06:30PM");
 //		sdb.addSeat(seat3);
-		
-		//BUG HERE: cannot add seat for another date because of key duplicates.
-		//Solution: Since we cannot have multiple m1's for different dates, we need to variant the keys
-		//0_m1,1_m1,2_m2,3_m3[...]n
-		System.out.println(sdb.getSeatID("m1"));
 
-		System.out.println(sdb.getSeatDataBase());
+		// BUG HERE: cannot add seat for another date because of key duplicates.
+		// Solution: Since we cannot have multiple m1's for different dates, we need to
+		// variant the keys
+		// 0_m1,1_m1,2_m2,3_m3[...]n
+//		System.out.println(sdb.getSeatID("m1"));
+
 	}
 
 }

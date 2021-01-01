@@ -33,10 +33,15 @@ public class UserDatabase<T extends User> {
 	}
 
 	public ArrayList<String> getUserDataBase() {
+		
 		ArrayList<String> usdb = new ArrayList<String>();
+		int userCount = 0;
 		for (Entry<String, T> entry : this.userDB.entrySet()) {
+			
 			T value = entry.getValue();
-			usdb.add(value.toString());
+			usdb.add("user_" + Integer.toString(userCount) + "=" + value.getUserName() + "\n" + "password_"
+					+ Integer.toString(userCount) + "=" + value.getPassword() + "\n");
+			userCount++;
 		}
 		return usdb;
 	}
