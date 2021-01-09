@@ -10,7 +10,7 @@ public class Seat {
 
 	// Constructors
 
-	public Seat(double seatPrice, int seatNumber, boolean isOccupied, String seatSection, String date, String time) {
+	public Seat(String seatSection, int seatNumber, double seatPrice, boolean isOccupied, String date, String time) {
 		this.seatPrice = seatPrice;
 		this.seatNumber = seatNumber;
 		this.isOccupied = isOccupied;
@@ -20,11 +20,11 @@ public class Seat {
 	}
 
 	public Seat(double seatPrice, int seatNumber, String seatSection) {
-		this(seatPrice, seatNumber, false, seatSection, "", "");
+		this(seatSection, seatNumber, seatPrice, false, "", "");
 	}
 
 	public Seat() {
-		this(-1, -1, false, "", "", "");
+		this("", -1, -1, false, "", "");
 	}
 
 	// GETTERS,SETTERS
@@ -73,9 +73,8 @@ public class Seat {
 	}
 
 	public String toString() {
-		return String.format(
-				"seatPrice = $%.2f\t\nseatNumber=%d\t\nisOccupied=%b\t\nseatSection=%s\t\nseatDate=%s\t\nseatTime=%s\n\n",
-				this.seatPrice, this.seatNumber, this.isOccupied, this.seatSection, this.date, this.time);
+		return String.format("seatPrice = $%.2f\t\nseatNumber=%d\t\nseatSection=%s\t\nseatDate=%s\t\nseatTime=%s\n\n",
+				this.seatPrice, this.seatNumber, this.seatSection, this.date, this.time);
 	}
 
 }

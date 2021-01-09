@@ -9,7 +9,7 @@ public class User {
 		this.password = password;
 	}
 
-	User(String userName) {
+	public User(String userName) {
 		this(userName, "");
 	}
 
@@ -34,8 +34,8 @@ public class User {
 	}
 
 	public String toString() {
-		
-		return String.format("user=%s\t\npassword=%s\n", this.userName, this.password);
+
+		return String.format("user=%s\npassword=%s\n", this.userName, this.password);
 	}
 
 }

@@ -1,4 +1,5 @@
 package model;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +38,14 @@ public class SeatDatabase<T extends Seat> {
 		return seat.getSeatSection() + Integer.toString(seat.getSeatNumber());
 	}
 
+	public String getDate() {
+		return this.date;
+	}
+
+	public String getTime() {
+		return this.time;
+	}
+
 	public String getDateTime() {
 		return this.date + "@" + this.time;
 	}
@@ -68,8 +77,10 @@ public class SeatDatabase<T extends Seat> {
 		ArrayList<String> sdb = new ArrayList<String>();
 		for (Entry<String, T> entry : this.seatDB.entrySet()) {
 			T value = entry.getValue();
-			sdb.add(Double.toString(value.getSeatPrice()));
+			String seatToAdd = value.getSeatSection() + value.getSeatNumber() + "|" + "$" + value.getSeatPrice() + "|"
+					+ value.getSeatDate() + "|" + value.getSeatTime() + "\n";
 
+			sdb.add(seatToAdd);
 		}
 		return sdb;
 	}
@@ -80,13 +91,13 @@ public class SeatDatabase<T extends Seat> {
 
 	public static void main(String args[]) {
 		SeatDatabase<Seat> sdb = new SeatDatabase<Seat>();
-		Seat seat1 = new Seat(35.0, 1, false, "m", "2020-12-23", "06:30PM");
-		sdb.addSeat(seat1);
-		Seat seat2 = new Seat(35.0, 1, false, "n", "2020-12-23", "06:30PM");
-		sdb.addSeat(seat2);
-		Seat seat3 = new Seat(35.0, 1, false, "m", "2020-12-23", "06:30PM");
-		sdb.addSeat(seat3);
-		System.out.println(sdb.getSeatDataBase());
+//		Seat seat1 = new Seat(35.0, 1, false, "m", "2020-12-23", "06:30PM");
+//		sdb.addSeat(seat1);
+//		Seat seat2 = new Seat(35.0, 1, false, "n", "2020-12-23", "06:30PM");
+//		sdb.addSeat(seat2);
+//		Seat seat3 = new Seat(35.0, 1, false, "m", "2020-12-23", "06:30PM");
+//		sdb.addSeat(seat3);
+//		System.out.println(sdb.getSeatDataBase());
 
 //
 //		Seat seat3 = new Seat(35.0, 1, false, "m", "2020-12-23", "06:30PM");
