@@ -47,31 +47,19 @@ public class SeatDatabase<T extends Seat> {
 	}
 
 	public String getDateTime() {
-		return this.date + "@" + this.time;
+		return this.date + "|" + this.time;
 	}
 
 	public void addSeat(String seatID, T seat) {
-//		if (isSeatOccupied(seat)) {
-//			System.out.println("This seat:" + seat + "not available!");
-//			return false;
-//		} else {
-//			System.out.println("Seat is available!");
+
 		seatDB.put(seatID, seat);
-//			System.out.println("Seat added!");
-//		return true;
+
 	}
+	
 
 	public void addSeat(T seat) {
 		seatDB.put(seat.getSeatSection() + Integer.toString(seat.getSeatNumber()), seat);
 	}
-
-//	public boolean isSeatOccupied(String seatID, T seat) {
-//		if(seat.isOccupied())
-//		{
-//			
-//		}
-//
-//	}
 
 	public ArrayList<String> getSeatDataBase() {
 		ArrayList<String> sdb = new ArrayList<String>();
@@ -87,28 +75,6 @@ public class SeatDatabase<T extends Seat> {
 
 	public String toString() {
 		return seatDB.toString();
-	}
-
-	public static void main(String args[]) {
-		SeatDatabase<Seat> sdb = new SeatDatabase<Seat>();
-//		Seat seat1 = new Seat(35.0, 1, false, "m", "2020-12-23", "06:30PM");
-//		sdb.addSeat(seat1);
-//		Seat seat2 = new Seat(35.0, 1, false, "n", "2020-12-23", "06:30PM");
-//		sdb.addSeat(seat2);
-//		Seat seat3 = new Seat(35.0, 1, false, "m", "2020-12-23", "06:30PM");
-//		sdb.addSeat(seat3);
-//		System.out.println(sdb.getSeatDataBase());
-
-//
-//		Seat seat3 = new Seat(35.0, 1, false, "m", "2020-12-23", "06:30PM");
-//		sdb.addSeat(seat3);
-
-		// BUG HERE: cannot add seat for another date because of key duplicates.
-		// Solution: Since we cannot have multiple m1's for different dates, we need to
-		// variant the keys
-		// 0_m1,1_m1,2_m2,3_m3[...]n
-//		System.out.println(sdb.getSeatID("m1"));
-
 	}
 
 }

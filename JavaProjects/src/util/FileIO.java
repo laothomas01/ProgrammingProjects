@@ -32,33 +32,6 @@ public class FileIO {
 
 	private DateTimeFormatter date_formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	private DateTimeFormatter time_formatter = DateTimeFormatter.ofPattern("hh_mm_a");
-//	public UserDatabase<User> loadUserDBFromText(String fileName) throws IOException {
-//		UserDatabase<User> usdb = new UserDatabase<User>();
-//		BufferedReader br = new BufferedReader(new FileReader(fileName));
-//		String line;
-//		String username = "";
-//		String password = "";
-//		int lineCount = 0;
-//		while ((line = br.readLine()) != null) {
-//			if (lineCount % 2 == 0) {
-//				username = line;
-//				System.out.println(
-//						lineCount + " Line read: [" + line + "] Username: [" + username + "] Password: " + password);
-//			} else if (lineCount % 2 == 1) {
-//				password = line;
-//				System.out.println(lineCount + " Line read: [" + line + "] Username: " + username + " Password: ["
-//						+ password + "] ");
-//				usdb.addUser(username, new User(username, password));
-//			} f
-
-//			lineCount++;
-//		}
-//		br.close();
-//		System.out.println("FILE READING ENDED");
-//
-//		return usdb;
-//
-//	}
 
 	// LOADING INFORMATION FROM .TXT FILE
 	// ###########################USERDATABASE#####################################
@@ -111,6 +84,8 @@ public class FileIO {
 //	}
 
 	// LOADS SEAT DATABASE INFORMATION
+	// this method ,acced by time and date, will be the list of shows
+	// available for the user to choose
 	public ShowDatabase<SeatDatabase<Seat>> buildShowDataBase(String filePath) {
 		Properties prop = new Properties();
 		FileInputStream fis = null;
@@ -151,8 +126,8 @@ public class FileIO {
 
 		String sectionNames = prop.getProperty("seatSections");
 		String[] sectionNames_Array = sectionNames.split(",");
-		for (String s : sectionNames_Array)
-			System.out.println(s);
+//		for (String s : sectionNames_Array)
+//			System.out.println(s);
 		// I WANT MY SEATNAMES. ILL BE USING THEM FOR THE SEATID LATE
 		// ###########################################################
 //		ArrayList<String> seatSectionInformation_Array = new ArrayList<>();
@@ -233,18 +208,24 @@ public class FileIO {
 
 	}
 
-	public void saveShowDataBaseToText(String fileName, ShowDatabase<SeatDatabase<Seat>> showDatabase)
-			throws IOException {
-		FileWriter fw = new FileWriter(fileName, true);
-		BufferedWriter bw = new BufferedWriter(fw);
-		System.out.println("#######################		FILE WRITE BEGIN	##############################");
-		String showDataBaseCollection = showDatabase.getShowDatabase().toString().replaceAll("[\\[ ,{}\\]]", "");
-		System.out.println(showDataBaseCollection);
-		bw.write(showDataBaseCollection);
-		System.out.println("#######################		FILE WRITE ENDED	##############################");
-		bw.close();
+	/*
+	 * GOING TO NEED BUILD_RESERVATION_FUNCTION
+	 * 
+	 * GOING TO NEED SAVE_RESERVATION_TO_TEXT_FUNCTION
+	 * 
+	 */
 
-	}
+//	public void saveShowDataBaseToText(String fileName, ShowDatabase<SeatDatabase<Seat>> showDatabase)
+//			throws IOException {
+//		FileWriter fw = new FileWriter(fileName, true);
+//		BufferedWriter bw = new BufferedWriter(fw);
+//		System.out.println("#######################		FILE WRITE BEGIN	##############################");
+//		String showDataBaseCollection = showDatabase.getShowDatabase().toString().replaceAll("[\\[ ,{}\\]]", "");
+//		System.out.println(showDataBaseCollection);
+//		bw.write(showDataBaseCollection);
+//		System.out.println("#######################		FILE WRITE ENDED	##############################");
+//		bw.close();
+//	}
 
 	public boolean isValidDate(String date) {
 		LocalDate valid = null;
@@ -268,14 +249,5 @@ public class FileIO {
 	}
 
 	// ###################################################################
-
-	public static void main(String args[]) throws IOException {
-		String shwDB = "seatDB.txt";
-		String file = "reservations.txt";
-//		String testFile = "showDBTestData.txt";
-		FileIO io = new FileIO();
-
-
-	}
 
 }

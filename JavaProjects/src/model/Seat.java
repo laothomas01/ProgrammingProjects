@@ -52,6 +52,10 @@ public class Seat {
 		return this.time;
 	}
 
+	public String getSeatDateTime() {
+		return this.date + "|" + this.time;
+	}
+
 	public boolean isOccupied() {
 		return isOccupied;
 	}
@@ -72,9 +76,11 @@ public class Seat {
 		this.isOccupied = isOccupied;
 	}
 
+	
 	public String toString() {
-		return String.format("seatPrice = $%.2f\t\nseatNumber=%d\t\nseatSection=%s\t\nseatDate=%s\t\nseatTime=%s\n\n",
-				this.seatPrice, this.seatNumber, this.seatSection, this.date, this.time);
+		return String.format(
+				"seatPrice = $%.2f\t\nseatNumber=%d\t\nseatisOccupied=%b\t\nseatSection=%s\t\nseatDate=%s\t\nseatTime=%s\n\n",
+				this.seatPrice, this.seatNumber, this.isOccupied, this.seatSection, this.date, this.time);
 	}
 
 }

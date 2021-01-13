@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import util.FileIO;
+
 /**
  * 
  * @author belik LINKED HASHMAP VS HASHMAP LINKEDHASHMAP maintains insertion
@@ -15,8 +17,8 @@ import java.util.Set;
  *            WE NEED TO ADD MORE FUNCTIONALITIES TO THIS LATER
  */
 public class ShowDatabase<T extends SeatDatabase<Seat>> {
-	private String date;
-	private String time;
+//	private String date;
+//	private String time;
 	HashMap<String, T> showDB;
 
 	public ShowDatabase() {
@@ -29,7 +31,7 @@ public class ShowDatabase<T extends SeatDatabase<Seat>> {
 	 * 
 	 */
 	public SeatDatabase<Seat> getShowID(String date, String time) {
-		return showDB.get(date + "@" + time);
+		return showDB.get(date + "|" + time);
 	}
 
 	public SeatDatabase getShowID(String showID) {
@@ -43,12 +45,17 @@ public class ShowDatabase<T extends SeatDatabase<Seat>> {
 	public Set<String> getKeySet() {
 		return showDB.keySet();
 	}
+
+	public SeatDatabase<Seat> getShowDate(String showDate) {
+		return showDB.get(showDate);
+	}
+
 //	public void addShow(T SeatDatabase) {
 //		showDB.put(getShowID(), SeatDatabase);
 //	}
 
 	public void addShow(String date, String time, T SeatDatabase) {
-		showDB.put(date + "@" + time, SeatDatabase);
+		showDB.put(date + "|" + time, SeatDatabase);
 	}
 
 	public ArrayList<String> getShowDatabase() {
@@ -62,12 +69,5 @@ public class ShowDatabase<T extends SeatDatabase<Seat>> {
 
 	public String toString() {
 		return showDB.toString();
-	}
-
-	public static void main(String args[]) {
-		ShowDatabase<SeatDatabase<Seat>> showdb = new ShowDatabase<>();
-		ShowDatabase<SeatDatabase<Seat>> showdb2 = new ShowDatabase<>();
-		SeatDatabase<Seat> sdb = new SeatDatabase<Seat>();
-
 	}
 }

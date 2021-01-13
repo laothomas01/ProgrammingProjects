@@ -1,4 +1,5 @@
 package model;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,20 +28,20 @@ public class UserDatabase<T extends User> {
 		if (isUserNameAvailable(userName)) {
 			userDB.put(userName, user);
 		} else {
-			System.out.printf("User name [%s] not available!\n", userName);
+			System.out.printf("User name [%s] already taken!\n", userName);
 			return false;
 		}
 		return true;
 	}
 
 	public ArrayList<String> getUserDataBase() {
-		
+
 		ArrayList<String> usdb = new ArrayList<String>();
 		int userCount = 0;
 		for (Entry<String, T> entry : this.userDB.entrySet()) {
-			
+
 			T value = entry.getValue();
-			usdb.add("user_" + Integer.toString(userCount) + "=" + value.getUserName() + "\n" + "password_"
+			usdb.add("\nuser_" + Integer.toString(userCount) + "=" + value.getUserName() + "\n" + "password_"
 					+ Integer.toString(userCount) + "=" + value.getPassword() + "\n");
 			userCount++;
 		}

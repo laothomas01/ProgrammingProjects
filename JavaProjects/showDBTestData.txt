@@ -1,9 +1,7 @@
-dates = 2020-12-23,	 2020-12-24
+dates = 2020-12-23\
+		
 
 times = 06_30_PM, 08_30_PM
+seatSections = m
+m=1,20,35
 
-seatSections = m,sb,wb,eb
-m=1,100,35
-sb=1,25,50
-wb=1,100,40
-eb=1,100,40
