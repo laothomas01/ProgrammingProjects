@@ -75,21 +75,21 @@ public class User {
 	}
 
 	public boolean addReservations(Seat s) {
-//		String dateTime = s.getSeatDate() + "|" + s.getSeatTime();
-		ArrayList<String> seats = this.reservations.get(s.getSeatDateTime());
+		ArrayList<String> seats = this.reservations.get(":" + s.getSeatDateTime() + ":");
+//		ArrayList<String> seats = this.reservations.get( s.getSeatDateTime());
 		if (s.isOccupied() == true) {
-			System.out.println("Seat is not available!");
+			System.out.println("Seat " + "[" + s.getSeatID() + "]" + " is not available!");
 			return false;
 		}
 		if (seats == null) {
 			seats = new ArrayList<String>();
 			seats.add(s.getSeatID());
-			this.reservations.put(s.getSeatDateTime(), seats);
+			this.reservations.put(":" + s.getSeatDateTime() + ":", seats);
+			return true;
 		} else {
 			seats.add(s.getSeatID());
+			return true;
 		}
-
-		return true;
 
 	}
 
@@ -98,7 +98,11 @@ public class User {
 	}
 
 	public ArrayList<String> getReservation(String dateTime) {
-		return this.reservations.get(dateTime);
+		return this.reservations.get(":" + dateTime + ":");
+	}
+
+	public ArrayList<String> getReservation(Seat s) {
+		return this.reservations.get(s.getSeatDateTime());
 	}
 
 	public void setReservations(HashMap<String, ArrayList<String>> reservations) {
@@ -129,8 +133,12 @@ public class User {
 
 	public String toString() {
 
-		return String.format("user=%s\npassword=%s\n", this.userName, this.password) + "\n" + "reservations="
-				+ this.reservations;
+		return String.format("user=%s\npassword=%s\n", this.userName, this.password) + "reservations="
+				+ this.reservations + "\n";
+	}
+	public String displayUser()
+	{
+		return String.format("user=%s\npassword=%s\n", this.userName, this.password);
 	}
 
 }

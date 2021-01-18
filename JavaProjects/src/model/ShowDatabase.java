@@ -62,7 +62,7 @@ public class ShowDatabase<T extends SeatDatabase<Seat>> {
 		ArrayList<String> showdb = new ArrayList<String>();
 		for (Entry<String, T> entry : this.showDB.entrySet()) {
 			T value = entry.getValue();
-			showdb.add(value.toString() + "\n");
+			showdb.add(value + "\n");
 		}
 		return showdb;
 	}

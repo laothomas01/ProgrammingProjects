@@ -38,12 +38,15 @@ public class UserDatabase<T extends User> {
 
 		ArrayList<String> usdb = new ArrayList<String>();
 		int userCount = 0;
+		int reservationCount = 0;
 		for (Entry<String, T> entry : this.userDB.entrySet()) {
 
 			T value = entry.getValue();
-			usdb.add("\nuser_" + Integer.toString(userCount) + "=" + value.getUserName() + "\n" + "password_"
-					+ Integer.toString(userCount) + "=" + value.getPassword() + "\n");
+			usdb.add("\nuser_" + userCount + "=" + value.getUserName() + "\n" + "password_" + userCount + "="
+					+ value.getPassword() + "\n" + "reservations_" + reservationCount + "=" + value.getReservations()
+					+ "\n");
 			userCount++;
+			reservationCount++;
 		}
 		return usdb;
 	}
@@ -57,6 +60,10 @@ public class UserDatabase<T extends User> {
 
 	public boolean isUserNameAvailable(T user) {
 		return this.isUserNameAvailable(user.getUserName());
+	}
+
+	public String toString() {
+		return getUserDataBase().toString();
 	}
 
 	/**

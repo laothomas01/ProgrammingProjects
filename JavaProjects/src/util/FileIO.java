@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import model.Seat;
 import model.SeatDatabase;
@@ -50,15 +52,37 @@ public class FileIO {
 
 	// helper method
 	private UserDatabase<User> BuildUserDB(Properties prop) {
-
 		int userCount = 0;
+		int reservationCount = 0;
+		// let's initialize an empty userdatabase
 		UserDatabase<User> usdb = new UserDatabase<User>();
-
-		while (prop.getProperty("user_" + userCount) != null) {
+		while (prop.getProperty("user_" + userCount) != null
+				&& prop.getProperty("reservations_" + reservationCount) != null) {
+			String username = prop.getProperty("user_" + userCount);
 			String password = prop.getProperty("password_" + userCount);
-			String user = prop.getProperty("user_" + userCount);
-			usdb.addUser(user, new User(user, password));
+			usdb.addUser(username, new User(username, password));
 			userCount++;
+		}
+		// let's load our seat reservations: seatIDs, date,, time
+		while (prop.getProperty("user_" + userCount) != null
+				&& prop.getProperty("reservations_" + reservationCount) != null) {
+			String username = prop.getProperty("user_" + userCount);
+			String password = prop.getProperty("password_" + userCount);
+			String reservations = prop.getProperty("reservations_" + reservationCount);
+			Pattern p = Pattern.compile("\\:([^:]*)\\:");
+			Matcher m = p.matcher(reservations);
+			while (m.find()) {
+				String dateTime = m.group(1);
+				String seats = usdb.getUser(username).getReservation(dateTime).toString().replaceAll("[\\[\\]]", "")
+						.trim();
+				String[] reservedSeatsSplit = seats.split(",");
+				for (String seat : reservedSeatsSplit) {
+						
+				}
+			}
+			userCount++;
+			reservationCount++;
+
 		}
 
 		return usdb;
@@ -69,12 +93,34 @@ public class FileIO {
 		FileWriter fw = new FileWriter(fileName, true);
 		BufferedWriter bw = new BufferedWriter(fw);
 		System.out.println("#######################		FILE WRITE BEGIN	##############################");
-		String dataBaseCollection = usdb.getUserDataBase().toString().replaceAll("[\\[ ,\\]]", "");
+		String dataBaseCollection = usdb.getUserDataBase().toString();
 		System.out.println(dataBaseCollection);
 		bw.write(dataBaseCollection);
+
 		System.out.println("#######################		FILE WRITE ENDED	##############################");
 		bw.close();
 	}
+
+//	public UserDatabase<User> BuildReservationDatabase(String filePath) {
+//		Properties prop = new Properties();
+//
+//		FileInputStream fis = null;
+//		try {
+//			fis = new FileInputStream(filePath);
+//			prop.load(fis);
+//			return BuildReservationDB(prop);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
+
+//	private UserDatabase<User> BuildReservationDB(Properties prop) {
+//		int reservationCount = 0;
+//		int userCount = 0;
+//		
+//		
+//	}
 
 	// may not need
 //	public void saveSeatDatabaseToText(String fileName, SeatDatabase<Seat> sdb) throws IOException {
