@@ -1,9 +1,9 @@
 [
 user_0=Thomas
 password_0=Lao
-reservations_0={:2020-12-23|08_30_PM:=[m1], :2020-12-23|06_30_PM:=[m1, m2]}
+reservations_0={2020-12-23|08_30_PM=[m1], 2020-12-23|06_30_PM=[m1, m2]}
 , 
 user_1=Jake
 password_1=Paul
-reservations_1={:2020-12-24|06_30_PM:=[m1, m2], :2020-12-24|08_30_PM:=[m1]}
+reservations_1={2020-12-24|06_30_PM=[m1, m2], 2020-12-24|08_30_PM=[m1]}
 ]

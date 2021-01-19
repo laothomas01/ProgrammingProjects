@@ -26,7 +26,7 @@ import model.ShowDatabase;
 import model.User;
 import model.UserDatabase;
 
-public class FileIO {
+public class FileIO implements FileConstants {
 	/*
 	 * make sure our date and time are in the correct format
 	 * 
@@ -54,38 +54,108 @@ public class FileIO {
 	private UserDatabase<User> BuildUserDB(Properties prop) {
 		int userCount = 0;
 		int reservationCount = 0;
-		// let's initialize an empty userdatabase
+		String seatData = seats_filepath;
+		FileIO io = new FileIO();
 		UserDatabase<User> usdb = new UserDatabase<User>();
-		while (prop.getProperty("user_" + userCount) != null
-				&& prop.getProperty("reservations_" + reservationCount) != null) {
+		ShowDatabase<SeatDatabase<Seat>> shwDB = io.buildShowDataBase(seatData);
+		while (prop.getProperty("user_" + userCount) != null) {
 			String username = prop.getProperty("user_" + userCount);
 			String password = prop.getProperty("password_" + userCount);
 			usdb.addUser(username, new User(username, password));
 			userCount++;
 		}
-		// let's load our seat reservations: seatIDs, date,, time
+		userCount = 0;
 		while (prop.getProperty("user_" + userCount) != null
 				&& prop.getProperty("reservations_" + reservationCount) != null) {
 			String username = prop.getProperty("user_" + userCount);
-			String password = prop.getProperty("password_" + userCount);
 			String reservations = prop.getProperty("reservations_" + reservationCount);
-			Pattern p = Pattern.compile("\\:([^:]*)\\:");
+//			System.out.println(username);
+//			System.out.println(reservations);
+			Pattern p = Pattern.compile("(\\d+-\\d+-\\d+)\\|(\\d+_\\d+)_(AM|PM)\\=\\[([^]]*)\\]");
 			Matcher m = p.matcher(reservations);
 			while (m.find()) {
-				String dateTime = m.group(1);
-				String seats = usdb.getUser(username).getReservation(dateTime).toString().replaceAll("[\\[\\]]", "")
-						.trim();
-				String[] reservedSeatsSplit = seats.split(",");
-				for (String seat : reservedSeatsSplit) {
-						
+				String date = m.group(1);
+				String time = m.group(2) + "_" + m.group(3);
+				String[] seats = m.group(4).strip().split(",");
+				for (String seat : seats) {
+//					System.out.println(username + " " + date + " " + time + " " + seat);
+					usdb.getUser(username).addReservations(date, time, seat);
 				}
 			}
+
 			userCount++;
 			reservationCount++;
-
 		}
-
 		return usdb;
+		//################### THIS IS CONSIDERED TRASH CODE ###############################
+//		int userCount = 0;
+//		int reservationCount = 0;
+//		String dateTime = "";
+//		String seats = "";
+//		// let's initialize an empty userdatabase
+//		UserDatabase<User> usdb = new UserDatabase<User>();
+//		while (prop.getProperty("user_" + userCount) != null
+//				&& prop.getProperty("reservations_" + reservationCount) != null) {
+//			String username = prop.getProperty("user_" + userCount);
+//			String password = prop.getProperty("password_" + userCount);
+//			usdb.addUser(username, new User(username, password));
+//			userCount++;
+//		}
+//
+//		userCount = 0;
+//		reservationCount = 0;
+////		// let's load our seat reservations: seatIDs, date,, time
+//		String seatData = seats_filepath;
+//		FileIO io = new FileIO();
+//		// i find it easier to add seats with a Seat class for a parameter
+//		// i will just draw information from this shwDB and add it back into the
+//		// reservations
+//		ShowDatabase<SeatDatabase<Seat>> shwDB = io.buildShowDataBase(seatData);
+//		while (prop.getProperty("user_" + userCount) != null
+//				&& prop.getProperty("reservations_" + reservationCount) != null) {
+//			String username = prop.getProperty("user_" + userCount);
+//			String password = prop.getProperty("password_" + userCount);
+////			System.out.println(userCount);
+//
+//			/*
+//			 * 
+//			 */
+//			String reservations = prop.getProperty("reservations_" + reservationCount);
+////			System.out.println(reservations);
+//
+//			/*
+//			 * Pattern to extract datetime information because ':' ex: :2020-12-23|08_30_PM:
+//			 */
+////			Pattern p = Pattern.compile("\\:([^:]*)\\:");
+////			System.out.println(reservations);
+//			Pattern p = Pattern.compile("\\{([^}]*)\\}");
+//			Matcher m = p.matcher(reservations);
+//			while (m.find()) {
+//				String reservationInformation = m.group(1);
+////				System.out.println(reservationInformation);
+////				Pattern p2 = Pattern.compile("\\:([^:]*)\\:");
+////				Matcher m2 = p2.matcher(reservationInformation);
+//				System.out.println(reservationInformation);
+//				
+//				}
+//
+////				System.out.println(reservations);
+////				String seats = usdb.getUser(username).getReservation(dateTime).toString().replaceAll("[\\[\\]]", "")
+////						.trim();
+//
+////				String[] reservedSeatsSplit = seats.split(",");
+////				System.out.println(seats);
+////			for (String seat : reservedSeatsSplit) {
+//////					System.out.println(seat);
+////					usdb.getUser(username).addReservations(dateTime, seat);
+////				}
+////			}
+//			userCount++;
+//			reservationCount++;
+//		}
+//
+//		return usdb;
+		//########################################################################
 
 	}
 
@@ -96,7 +166,6 @@ public class FileIO {
 		String dataBaseCollection = usdb.getUserDataBase().toString();
 		System.out.println(dataBaseCollection);
 		bw.write(dataBaseCollection);
-
 		System.out.println("#######################		FILE WRITE ENDED	##############################");
 		bw.close();
 	}
