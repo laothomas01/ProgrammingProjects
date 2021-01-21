@@ -1,8 +1,8 @@
 package driver;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.regex.Matcher;
@@ -18,8 +18,15 @@ import util.FileIO;
 
 public class Main implements FileConstants {
 	public static void main(String args[]) throws IOException {
-		String user_Reservations = reservation_filepath;
-		String seatData = seats_filepath;
+		/*
+		 * GUI TESTING
+		 * 
+		 */
+
+//		m.run();
+
+//		String user_Reservations = reservation_filepath;
+//		String seatData = seats_filepath;
 //		Main.test_UserDatabase();
 //		Main.test_SeatDatabase();
 //		Main.test_BuildShowDB();
@@ -54,38 +61,42 @@ public class Main implements FileConstants {
 ////		m.find();
 ////		System.out.println(m.group(1));
 
-		UserDatabase<User> usdb = new UserDatabase<User>();
-
-		User user = new User("Thomas", "Lao");
-		User user2 = new User("Jake", "Paul");
-		FileIO io = new FileIO();
-		ShowDatabase<SeatDatabase<Seat>> shwDB = io.buildShowDataBase(seatData);
-		// create some dummy seats
-		Seat s1 = shwDB.getShowDate("2020-12-23|06_30_PM").getSeatID("m1");
-		Seat s2 = shwDB.getShowDate("2020-12-23|08_30_PM").getSeatID("m1");
-		Seat s3 = shwDB.getShowDate("2020-12-23|06_30_PM").getSeatID("m2");
-
-		Seat s4 = shwDB.getShowDate("2020-12-24|06_30_PM").getSeatID("m1");
-		Seat s5 = shwDB.getShowDate("2020-12-24|08_30_PM").getSeatID("m1");
-		Seat s6 = shwDB.getShowDate("2020-12-24|06_30_PM").getSeatID("m2");
-		// add dummy data to user
-		user.addReservations(s1);
-		user.addReservations(s2);
-		user.addReservations(s3);
-
-		user2.addReservations(s4);
-		user2.addReservations(s5);
-		user2.addReservations(s6);
-
-		// add dummy user to dummy database
-		usdb.addUser(user.getUserName(), user);
-		usdb.addUser(user2.getUserName(), user2);
-		io.saveUserDatabaseToText(user_Reservations, usdb);
-		UserDatabase<User> usdbLoad = io.BuildUserDatabase(user_Reservations);
-		System.out.println();
-		System.out.println("############BEGIN LOADING INFORMATION#############");
-		System.out.println(usdbLoad);
-		System.out.println("############LOADING HAS FINISHED##################");
+//		UserDatabase<User> usdb = new UserDatabase<User>();
+//
+//		User user = new User("Thomas", "Lao");
+//		User user2 = new User("Jake", "Paul");
+//		FileIO io = new FileIO();
+//		ShowDatabase<SeatDatabase<Seat>> shwDB = io.buildShowDataBase(seatData);
+//		// create some dummy seats
+//		Seat s1 = shwDB.getShowDate("2020-12-23|06_30_PM").getSeatID("m1");
+//		Seat s2 = shwDB.getShowDate("2020-12-23|08_30_PM").getSeatID("m1");
+//		Seat s3 = shwDB.getShowDate("2020-12-23|06_30_PM").getSeatID("m2");
+//
+//		Seat s4 = shwDB.getShowDate("2020-12-24|06_30_PM").getSeatID("m1");
+//		Seat s5 = shwDB.getShowDate("2020-12-24|08_30_PM").getSeatID("m1");
+//		Seat s6 = shwDB.getShowDate("2020-12-24|06_30_PM").getSeatID("m2");
+//		// add dummy data to user
+//		user.addReservations(s1);
+//		user.addReservations(s2);
+//		user.addReservations(s3);
+//
+//		user2.addReservations(s4);
+//		user2.addReservations(s5);
+//		user2.addReservations(s6);
+//
+//		// add dummy user to dummy database
+//		usdb.addUser(user.getUserName(), user);
+//		usdb.addUser(user2.getUserName(), user2);
+////		io.saveUserDatabaseToText(user_Reservations, usdb);
+//		UserDatabase<User> usdbLoad = io.BuildUserDatabase(user_Reservations);
+//		System.out.println();
+//		System.out.println("############BEGIN LOADING INFORMATION#############");
+//		System.out.println(usdbLoad);
+//		System.out.println(usdbLoad.getUser("Thomas"));
+//		System.out.println(usdbLoad.getUser("Thomas").removeSeatReservation("2020-12-23|08_30_PM", "m1"));
+//		System.out.println(usdbLoad);
+//		System.out.println(usdbLoad.getUser("Thomas").viewAllReservations("2020-12-23|08_30_PM"));
+//		System.out.println("############LOADING HAS FINISHED##################");
 //		Main.test_FILEIO_buildUserDatabase();
 
 	}
@@ -298,79 +309,62 @@ public class Main implements FileConstants {
 //		System.out.println(shwDB.getShowDate("2020-12-23|06_30_PM").getSeatID("m3"));
 //	}
 //
-	public static void test_FILEIO_buildUserDatabase() throws IOException {
-		/*
-		 * String info = "{20F20-12-23|08_30_PM=[m4,m7], 2020-12-24|06_30_PM=[m1,m2]}";
-		 * Pattern.compile("(\\d+-\\d+-\\d+)\\|(\\d+_\\d+)_(AM|PM)\\=\\[([^]]*)\\]");
-		 * Matcher m = p.matcher(info); while (m.find()) { //
-		 * System.out.println(m.group(1) + " " + m.group(2)); //
-		 * System.out.println(m.group(3)); System.out.println(m.group(1) + " " +
-		 * m.group(2) + " " + m.group(3) + " " + m.group(4)); }
-		 * 
-		 * 
-		 * Console results: group(1) = 2020-12-23 2020-12-24 group(2) = 08_30 06_30
-		 * group(3) = AM | PM group(4) = m4,m7 m1,m2
-		 * 
-		 */
-
-		int userCount = 0;
-		int reservationCount = 0;
-		String user_Reservations = reservation_filepath;
-		String seatData = seats_filepath;
-		FileIO io = new FileIO();
-		UserDatabase<User> usdb = new UserDatabase<User>();
-		ShowDatabase<SeatDatabase<Seat>> shwDB = io.buildShowDataBase(seatData);
-		FileInputStream fis = new FileInputStream(user_Reservations);
-		Properties prop = new Properties();
-		prop.load(fis);
-		while (prop.getProperty("user_" + userCount) != null) {
-			String username = prop.getProperty("user_" + userCount);
-			String password = prop.getProperty("password_" + userCount);
-			usdb.addUser(username, new User(username, password));
-			userCount++;
-		}
-		userCount = 0;
-		while (prop.getProperty("user_" + userCount) != null
-				&& prop.getProperty("reservations_" + reservationCount) != null) {
-			String username = prop.getProperty("user_" + userCount);
-			String reservations = prop.getProperty("reservations_" + reservationCount);
-//			System.out.println(username);
-//			System.out.println(reservations);
-			Pattern p = Pattern.compile("(\\d+-\\d+-\\d+)\\|(\\d+_\\d+)_(AM|PM)\\=\\[([^]]*)\\]");
-			Matcher m = p.matcher(reservations);
-			while (m.find()) {
-				String date = m.group(1);
-				String time = m.group(2) + "_" + m.group(3);
-				String[] seats = m.group(4).strip().split(",");
-				for (String seat : seats) {
-//					System.out.println(username + " " + date + " " + time + " " + seat);
-					usdb.getUser(username).addReservations(date, time, seat);
-				}
-			}
-
-			userCount++;
-			reservationCount++;
-		}
-		System.out.println(usdb.getUserDataBase());
-		System.out.println(usdb.getUser("Thomas"));
-		System.out.println(usdb.getUser("Thomas").getReservation("2020-12-23|08_30_PM"));
-
-	}
-
+//	public static void test_FILEIO_buildUserDatabase() throws IOException {
+//		/*
+//		 * String info = "{20F20-12-23|08_30_PM=[m4,m7], 2020-12-24|06_30_PM=[m1,m2]}";
+//		 * Pattern.compile("(\\d+-\\d+-\\d+)\\|(\\d+_\\d+)_(AM|PM)\\=\\[([^]]*)\\]");
+//		 * Matcher m = p.matcher(info); while (m.find()) { //
+//		 * System.out.println(m.group(1) + " " + m.group(2)); //
+//		 * System.out.println(m.group(3)); System.out.println(m.group(1) + " " +
+//		 * m.group(2) + " " + m.group(3) + " " + m.group(4)); }
+//		 * 
+//		 * 
+//		 * Console results: group(1) = 2020-12-23 2020-12-24 group(2) = 08_30 06_30
+//		 * group(3) = AM | PM group(4) = m4,m7 m1,m2
+//		 * 
+//		 */
 //
-//	public static void test_BuildUserDatabaseIO() {
+//		int userCount = 0;
+//		int reservationCount = 0;
 //		String user_Reservations = reservation_filepath;
 //		String seatData = seats_filepath;
 //		FileIO io = new FileIO();
-//		User user = new User("Thomas", "Lao");
+//		UserDatabase<User> usdb = new UserDatabase<User>();
 //		ShowDatabase<SeatDatabase<Seat>> shwDB = io.buildShowDataBase(seatData);
-//		Seat s1 = shwDB.getShowDate("2020-12-23|06_30_PM").getSeatID("m1");
-//		Seat s2 = shwDB.getShowDate("2020-12-23|06_30_PM").getSeatID("m2");
-//		user.addReservations(s1);
-//		user.addReservations(s2);
-//		UserDatabase<User> usdb = new UserDatabase<>();
-//		usdb.addUser(user.getUserName(), user);
-//		System.out.println(usdb);
+//		FileInputStream fis = new FileInputStream(user_Reservations);
+//		Properties prop = new Properties();
+//		prop.load(fis);
+//		while (prop.getProperty("user_" + userCount) != null) {
+//			String username = prop.getProperty("user_" + userCount);
+//			String password = prop.getProperty("password_" + userCount);
+//			usdb.addUser(username, new User(username, password));
+//			userCount++;
+//		}
+//		userCount = 0;
+//		while (prop.getProperty("user_" + userCount) != null
+//				&& prop.getProperty("reservations_" + reservationCount) != null) {
+//			String username = prop.getProperty("user_" + userCount);
+//			String reservations = prop.getProperty("reservations_" + reservationCount);
+////			System.out.println(username);
+////			System.out.println(reservations);
+//			Pattern p = Pattern.compile("(\\d+-\\d+-\\d+)\\|(\\d+_\\d+)_(AM|PM)\\=\\[([^]]*)\\]");
+//			Matcher m = p.matcher(reservations);
+//			while (m.find()) {
+//				String date = m.group(1);
+//				String time = m.group(2) + "_" + m.group(3);
+//				String[] seats = m.group(4).strip().split(",");
+//				for (String seat : seats) {
+////					System.out.println(username + " " + date + " " + time + " " + seat);
+//					usdb.getUser(username).addReservations(date, time, seat);
+//				}
+//			}
+//
+//			userCount++;
+//			reservationCount++;
+//		}
+//		System.out.println(usdb.getUserDataBase());
+//		System.out.println(usdb.getUser("Thomas"));
+//		System.out.println(usdb.getUser("Thomas").getReservation("2020-12-23|08_30_PM"));
 //
 //	}
 

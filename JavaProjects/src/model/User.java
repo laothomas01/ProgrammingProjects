@@ -76,7 +76,7 @@ public class User {
 
 	public boolean addReservations(Seat s) {
 //		ArrayList<String> seats = this.reservations.get(":" + s.getSeatDateTime() + ":");
-		ArrayList<String> seats = this.reservations.get( s.getSeatDateTime());
+		ArrayList<String> seats = this.reservations.get(s.getSeatDateTime());
 		if (s.isOccupied() == true) {
 			System.out.println("Seat " + "[" + s.getSeatID() + "]" + " is not available!");
 			return false;
@@ -123,6 +123,7 @@ public class User {
 	public boolean removeSeatReservation(Seat s) {
 		ArrayList<String> seats = this.reservations.get(s.getSeatDateTime());
 		if (seats != null) {
+			System.out.println("[" + s.getSeatID() + "]" + "has been removed");
 			seats.remove(s.getSeatID());
 			return true;
 		}
@@ -130,7 +131,8 @@ public class User {
 	}
 
 	public String viewAllReservations(String dateTime) {
-		return dateTime + reservations.get(dateTime).toString();
+		ArrayList<String> seats = this.reservations.get(dateTime);
+		return dateTime + "=" + reservations.get(dateTime).toString();
 	}
 
 	public String toString() {
@@ -139,7 +141,7 @@ public class User {
 				+ this.reservations + "\n";
 	}
 
-	public String displayUser() {
+	public String displayUserInfo() {
 		return String.format("user=%s\npassword=%s\n", this.userName, this.password);
 	}
 
